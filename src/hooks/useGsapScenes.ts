@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type SceneType = 'field' | 'geology' | 'plans' | 'livetour';
 
-export function useGsapScene(containerRef: React.RefObject<HTMLDivElement>, scene: SceneType) {
+export function useGsapScene(containerRef: React.RefObject<HTMLDivElement>) {
   const scopeRef = useRef<HTMLDivElement>(null);
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
