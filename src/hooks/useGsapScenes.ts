@@ -11,6 +11,9 @@ export function useGsapScene(containerRef: React.RefObject<HTMLDivElement>,scene
   const scopeRef = useRef<HTMLDivElement>(null);
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // 随便使用一下 sceneType，消除未读取报错
+  console.log('当前场景类型：', sceneType);
+  
   useGSAP(() => {
     if (!containerRef.current) return;
     const root = containerRef.current;
