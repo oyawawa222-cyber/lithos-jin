@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+/* 首页载入动画 */
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes heroZoom {
+  0% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.hero-anim {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-reveal {
+  animation-name: heroReveal;
+  animation-duration: 1.1s;
+}
+.hero-fade {
+  animation-name: heroFadeUp;
+  animation-duration: 1s;
+}
+.hero-zoom {
+  animation: heroZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 减少动效适配 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim, .hero-zoom {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+
+/* 全局平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 整页滚动吸附 */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+}
+.scroll-snap-container > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Canvas硬件加速，解决聚光延迟卡顿 */
+canvas {
+  will-change: mask-image;
+  transform: translateZ(0);
+}
+
+/* 高层元素开启硬件加速，减少渲染卡顿 */
+.z-30, .z-50, .z-[100] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* 滚动容器硬件加速，分离渲染层 */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+.scroll-snap-container > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Canvas蒙版独立渲染层，不与页面混合渲染 */
+canvas {
+  will-change: mask-image;
+  transform: translateZ(0);
+  contain: layout paint size;
+}
+
+/* 高层UI文字单独图层，避免和蒙版重绘冲突 */
+.z-50 {
+  will-change: transform, opacity;
+  transform: translateZ(10px);
+  pointer-events: none;
+}
+.z-30 {
+  will-change: mask-image;
+  transform: translateZ(5px);
+}
+.z-10 {
+  will-change: transform;
+  transform: translateZ(1px);
+}
+
+/* 全局关闭平滑滚动（平滑滚动会抢占主线程，加剧鼠标卡顿） */
+html {
+  scroll-behavior: auto;
+}
